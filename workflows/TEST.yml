@@ -1,8 +1,13 @@
-name: TEST
+name: Simple Hello World Workflow
+
 on: [push]
-  jobs:
-    our-first-job:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Run console log
-             run: echo "Hello GitHub Actions!" 
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Say Hello
+        run: echo "Hello, World!"
