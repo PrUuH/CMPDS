@@ -1,6 +1,3 @@
 Fst file
-<<<<<<< HEAD
 Change 2
-=======
->>>>>>> eeafc9c (Main branch update)
 Main branch change
