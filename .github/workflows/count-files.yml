@@ -7,7 +7,8 @@ on:
   pull_request:
     branches:
       - main  
-  workflow_dispatch:  # Позволяет запускать вручную из интерфейса GitHub
+  workflow_dispatch:  # Позволяет запускать вручную из интерфейса GitHub 
+  #на другой триггер другой job
 
 jobs:
   count-files:
@@ -15,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3 #
 
       - name: Count files in repository
-        id: count
+        id: count #
         run: |
           file_count=$(find . -type f | wc -l)
           echo "Total files in repository: $file_count"
