@@ -1,32 +1,27 @@
 name: Count Files in Repository
 
-# Триггер выполнения
 on:
   push:
     branches:
-      - main  # Выполнять при пуше в ветку main
+      - main  
   pull_request:
     branches:
-      - main  # Выполнять при создании PR в main
+      - main  
   workflow_dispatch:  # Позволяет запускать вручную из интерфейса GitHub
 
 jobs:
   count-files:
-    runs-on: ubuntu-latest  # Используем последнюю версию Ubuntu
+    runs-on: ubuntu-latest  
 
     steps:
-      # Шаг 1: Склонировать репозиторий
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Шаг 2: Подсчитать количество файлов
       - name: Count files in repository
         id: count
         run: |
-          # Подсчитываем количество файлов в репозитории
           file_count=$(find . -type f | wc -l)
           echo "Total files in repository: $file_count"
-          # Сохраняем результат как выходной параметр
           echo "file_count=$file_count" >> $GITHUB_ENV
 
       - name: Display file count
