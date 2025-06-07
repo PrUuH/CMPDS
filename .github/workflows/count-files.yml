@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4.2.2 # actions - пространство имён, предопреленных гитхабом
 
       - name: Count files in repository
-        id: count # позволяет ссылаться на count на этот шаг из других шагов
+        id: count # идентификатор шага, позволяет ссылаться на count на этот шаг из других шагов
         run: |
           file_count=$(find . -type f | wc -l)
           echo "Total files in repository: $file_count"
@@ -34,7 +34,8 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Checkout repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.2.2
 
       - name: Pull Request-spec task
-        run: echo "This job run only on pull request" 
+        run: | 
+          echo "This job run only on pull request" 
