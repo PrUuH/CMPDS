@@ -1,0 +1,41 @@
+name: Multi-Trigger Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  job-for-push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Push-specific task
+        run: echo "This job runs only on push events."
+
+  job-for-pull-request:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Pull Request-specific task
+        run: echo "This job runs only on pull request events."
+
+  job-for-manual-trigger:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Manual trigger-specific task
+        run: echo "This job runs only when manually triggered."
