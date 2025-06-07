@@ -34,7 +34,7 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Checkout repository
-      - uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4.2.2
 
       - name: Pull Request-spec task
         run: | 
