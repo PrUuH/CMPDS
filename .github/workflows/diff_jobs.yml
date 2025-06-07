@@ -1,4 +1,4 @@
-name: Multi-Trigger Workflow
+name: Count Files in Repository
 
 on:
   push:
@@ -7,35 +7,35 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
-  job-for-push:
+  count-files:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.2.2
 
-      - name: Push-specific task
-        run: echo "This job runs only on push events."
+      - name: Count files in repository
+        id: count
+        run: |
+          file_count=$(find . -type f | wc -l)
+          echo "Total files in repository: $file_count"
+          echo "file_count=$file_count" >> $GITHUB_ENV
+
+      - name: Display file count
+        run: |
+          echo "The repository contains ${{ env.file_count }} files."
 
   job-for-pull-request:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' 
+    strategy:
+      matrix:
+        event: [pull_request]
+    if: contains(strategy.matrix.event, github.event_name)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
 
       - name: Pull Request-specific task
-        run: echo "This job runs only on pull request events."
-
-  job-for-manual-trigger:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4.2.2
-
-      - name: Manual trigger-specific task
-        run: echo "This job runs only when manually triggered."
+        run: |
+          echo "This job runs only on pull request"
